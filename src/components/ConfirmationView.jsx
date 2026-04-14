@@ -12,12 +12,24 @@ function statusClass(status) {
   return "tag tag--warning";
 }
 
-function getEmailSummary(reservation) {
-  if (reservation.emailDelivery?.status === "queued") {
-    return `The gate PIN and reservation details were sent to ${reservation.emailDelivery.sentTo}.`;
+function statusLabel(status) {
+  if (status === "active") {
+    return "Today";
   }
 
-  return `We saved the reservation, but the PIN email to ${reservation.emailDelivery?.sentTo || reservation.email} was not sent successfully yet.`;
+  if (status === "expired") {
+    return "Past visit";
+  }
+
+  return "Reserved";
+}
+
+function getEmailSummary(reservation) {
+  if (reservation.emailDelivery?.status === "queued") {
+    return `Your gate PIN and reservation details were sent to ${reservation.emailDelivery.sentTo}.`;
+  }
+
+  return `Your reservation was saved, but we could not send the confirmation email to ${reservation.emailDelivery?.sentTo || reservation.email} just yet.`;
 }
 
 export default function ConfirmationView({ reservation, onBookAnother }) {
@@ -42,18 +54,18 @@ export default function ConfirmationView({ reservation, onBookAnother }) {
           <p className="eyebrow">Payment confirmed</p>
           <h2>Your reservation is confirmed</h2>
           <p className="section-copy">
-            Your gate details are now tied to the reservation and sent by email after checkout.
+            A confirmation email with your gate PIN and visit details is on its way.
           </p>
         </div>
-        <span className={statusClass(reservation.status)}>{reservation.status}</span>
+        <span className={statusClass(reservation.status)}>{statusLabel(reservation.status)}</span>
       </div>
 
       <div className="confirmation-card confirmation-card--delivery">
         <p className="eyebrow">Email confirmation</p>
         <h3>
           {reservation.emailDelivery?.status === "queued"
-            ? "The PIN email was queued successfully"
-            : "The PIN email still needs attention"}
+            ? "Your email is on the way"
+            : "We still need to send your email"}
         </h3>
         <p className="pin-caption">{getEmailSummary(reservation)}</p>
 
@@ -62,18 +74,6 @@ export default function ConfirmationView({ reservation, onBookAnother }) {
             <span>Email destination</span>
             <strong>{reservation.emailDelivery?.sentTo || reservation.email}</strong>
           </div>
-          {reservation.emailDelivery?.emailId ? (
-            <div className="delivery-channel">
-              <span>Provider message id</span>
-              <strong>{reservation.emailDelivery.emailId}</strong>
-            </div>
-          ) : null}
-          {reservation.emailDelivery?.provider ? (
-            <div className="delivery-channel">
-              <span>Email provider</span>
-              <strong>{reservation.emailDelivery.provider}</strong>
-            </div>
-          ) : null}
         </div>
       </div>
 
@@ -105,16 +105,20 @@ export default function ConfirmationView({ reservation, onBookAnother }) {
         </article>
 
         <article className="info-card">
-          <p className="eyebrow">What happens next</p>
+          <p className="eyebrow">Before you arrive</p>
           <ol className="instruction-list">
-            <li>The guest receives the confirmation code, visit window, and gate PIN by email.</li>
-            <li>At the gate, they enter the emailed 6-digit PIN on the Crappie House keypad.</li>
-            <li>If email sending fails, check the backend logs and the Resend dashboard for the returned provider status.</li>
+            <li>Check your email for the confirmation code, visit window, and gate PIN.</li>
+            <li>Bring that email with you when you head to the resort.</li>
+            <li>At the Crappie House keypad, enter the 6-digit PIN from the email to get in.</li>
           </ol>
 
           <div className="delivery-note">
-            <strong>Email status</strong>
-            <span>{reservation.emailDelivery?.message || "Waiting for backend response."}</span>
+            <strong>Need help?</strong>
+            <span>
+              {reservation.emailDelivery?.status === "queued"
+                ? "If the message does not show up soon, check your spam or promotions folder."
+                : "Please try booking again or contact the resort office for assistance."}
+            </span>
           </div>
         </article>
       </div>

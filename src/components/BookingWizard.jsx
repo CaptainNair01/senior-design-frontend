@@ -172,13 +172,13 @@ export default function BookingWizard({ onComplete }) {
           provider: response.provider,
           sentTo: response.sentTo,
           emailId: response.emailId,
-          message: `The PIN email has been queued successfully with ${response.provider}.`,
+          message: "The PIN email has been queued successfully.",
         };
       } catch (error) {
         emailDelivery = {
           status: "failed",
           sentTo: reservation.email,
-          message: error.message,
+          message: "We could not send the confirmation email just yet.",
         };
       }
 
@@ -190,7 +190,7 @@ export default function BookingWizard({ onComplete }) {
         emailDelivery,
       });
     } catch (error) {
-      setSubmitError(error.message || "Something went wrong while creating the reservation.");
+      setSubmitError("Something went wrong while saving the reservation. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
@@ -200,8 +200,8 @@ export default function BookingWizard({ onComplete }) {
     <section className="panel booking-panel">
       <div className="section-header">
         <div>
-          <p className="eyebrow">Guest checkout</p>
-          <h2>Book a Crappie House day pass</h2>
+          <p className="eyebrow">Reserve your visit</p>
+          <h2>Book your Crappie House day pass</h2>
         </div>
         <div className="stepper" aria-label="Checkout progress">
           <span className={`step-pill ${step === 1 ? "is-active" : ""}`}>1. Visit details</span>
@@ -267,7 +267,7 @@ export default function BookingWizard({ onComplete }) {
                 />
                 {errors.email ? <small className="field-error">{errors.email}</small> : null}
                 {!errors.email ? (
-                  <small className="field-hint">Required so we can email the gate PIN after checkout.</small>
+                  <small className="field-hint">We&apos;ll send your gate PIN and visit details here.</small>
                 ) : null}
               </label>
 
@@ -280,7 +280,7 @@ export default function BookingWizard({ onComplete }) {
                   type="tel"
                   value={form.phone}
                 />
-                <small className="field-hint">Optional for future SMS support.</small>
+                <small className="field-hint">Optional contact number for your reservation.</small>
               </label>
             </div>
 
@@ -322,17 +322,16 @@ export default function BookingWizard({ onComplete }) {
           <>
             <div className="payment-shell">
               <div className="payment-card">
-                <p className="eyebrow">Square-ready payment block</p>
-                <h3>Mock card capture for frontend demo</h3>
+                <p className="eyebrow">Payment</p>
+                <h3>Complete your reservation</h3>
                 <p className="payment-copy">
-                  This section is where the Square Web Payments SDK will mount. For now, it collects
-                  just enough state to complete the frontend flow.
+                  Finish checkout to lock in your visit and have your gate PIN emailed right away.
                 </p>
 
                 <div className="mock-card">
-                  <span>Secure checkout preview</span>
-                  <strong>Square sandbox tokenization placeholder</strong>
-                  <small>Card details should be handled by Square, not stored by this app.</small>
+                  <span>Secure checkout</span>
+                  <strong>Your reservation details will be confirmed after payment.</strong>
+                  <small>Use the name and billing ZIP tied to the card you plan to use.</small>
                 </div>
 
                 <div className="field-grid">
@@ -367,7 +366,7 @@ export default function BookingWizard({ onComplete }) {
               </div>
 
               <aside className="review-card">
-                <p className="eyebrow">Charge preview</p>
+                <p className="eyebrow">Booking details</p>
                 <ul className="review-list">
                   <li>
                     <span>Guest</span>
@@ -412,7 +411,7 @@ export default function BookingWizard({ onComplete }) {
                 Back
               </button>
               <button className="button button--primary" disabled={isSubmitting} type="submit">
-                {isSubmitting ? "Processing reservation..." : "Pay and email PIN"}
+                {isSubmitting ? "Processing reservation..." : "Complete reservation"}
               </button>
             </div>
           </>

@@ -3,7 +3,7 @@ export const BRAND = {
   location: "Lake Buchanan, Texas",
   product: "Crappie House Smart Pass",
   description:
-    "A mobile-first reservation flow for day visitors to choose a pass, pay quickly, and receive their gate PIN by email after checkout.",
+    "Reserve your day pass, choose your arrival window, and receive your gate PIN by email right after checkout.",
 };
 
 export const PASS_TYPES = [
@@ -22,7 +22,7 @@ export const PASS_TYPES = [
   {
     id: "overnight",
     label: "Overnight Guest",
-    description: "Coming soon once cabin and RV workflows are connected.",
+    description: "Cabin and RV guest access will be available soon.",
     price: 0,
     comingSoon: true,
   },
@@ -53,9 +53,9 @@ export const TIME_SLOTS = [
 ];
 
 export const HERO_METRICS = [
-  { label: "Delivery option", value: "Email with PIN" },
+  { label: "PIN delivery", value: "Sent by email" },
   { label: "Day-pass pricing", value: "$15 adult / $5 kid" },
-  { label: "Guest flow", value: "Booking to confirmation" },
+  { label: "Reservation time", value: "A few quick steps" },
 ];
 
 export const AMENITIES = [

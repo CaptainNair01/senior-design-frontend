@@ -1,9 +1,9 @@
 import { BRAND, HERO_METRICS } from "../data/resortContent";
 
 const USER_STATUS = [
-  { label: "Delivery", value: "Email with PIN" },
-  { label: "Checkout", value: "2-step reservation flow" },
-  { label: "Access", value: "Gate details sent after payment" },
+  { label: "Delivery", value: "PIN emailed after payment" },
+  { label: "Reservation", value: "Quick and simple checkout" },
+  { label: "Arrival", value: "Gate details included" },
 ];
 
 export default function HeroBanner({ activeView, onChangeView }) {
@@ -21,7 +21,7 @@ export default function HeroBanner({ activeView, onChangeView }) {
 
       <div className="hero-content">
         <div className="hero-copy">
-          <p className="eyebrow">Guest booking experience</p>
+          <p className="eyebrow">Lake day-pass reservations</p>
           <h1>{BRAND.product}</h1>
           <p className="hero-description">{BRAND.description}</p>
 
