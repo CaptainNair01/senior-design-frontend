@@ -1,0 +1,9 @@
+{
+  "name": "Hi-Line Resort Smart Pass",
+  "short_name": "Smart Pass",
+  "description": "Day-pass reservations and PIN delivery for Hi-Line Resort.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#eff7f5",
+  "theme_color": "#1d6d69"
+}
